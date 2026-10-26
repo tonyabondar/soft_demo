@@ -37,7 +37,7 @@
           </div>
           <div>
             <label for="studentName">Full Name: </label>
-            <input type="text" id="studentName" v-model="newStudent.name" required />
+            <input type="text" id="studentName" v-model="newStudent.name"  />
           </div>
           <div>
             <label for="studentEmail">Email: </label>
@@ -79,19 +79,10 @@ export default {
     login() {
       LoginService.login(this.studentLoginRequest)
         .then(response => {
-          if(response.status==200){
-            var student = response.data;
-            console.log(student);
-            localStorage.setItem("sid", student.id);
-            this.message="Success!!!"
-            alert("success!");
-          }
-          else {
-            this.studentLoginRequest.studentId = "";
-            this.studentLoginRequest.password = "";
-            this.message = e.response?.data?.message || "Login failed, check internet or credential";
-            console.error(e);
-          }
+          var student = response.data;
+          console.log(student);
+          localStorage.setItem("sid", student.id);
+          alert("success!");
         })
         .catch(e => {
           this.studentLoginRequest.studentId = "";
@@ -114,9 +105,28 @@ export default {
       // Print the collected student info in console for testing
       console.log("Submitting new student data:", this.newStudent);      
       // TODO: Connect to your registration api service here, e.g.:
-      // LoginService.register(this.newStudent).then(...).catch(...)
-            alert("Registration submitted successfully!");
+      LoginService.register(this.newStudent)
+        .then(response => {
+          var result = response.data;
+          if (response.status==201){
+            console.log(result.message);
+            localStorage.setItem("sid", this.newStudent.id);
+            alert("success!");
+          }else{
+            console.log(result.message);
+            alert("Error with message: "+result.message);
+          }
+        })
+        .catch(e => {
+          this.studentLoginRequest.studentId = "";
+          this.studentLoginRequest.password = "";
+          this.message = e.response?.data?.message || "Login failed, check internet or credential";
+          console.error(e);
+          alert("Error with message: "+e.response?.data?.message);
+        });
+      //alert("Registration submitted successfully!");
       this.closeCreateModal(); // Close modal after successful submission
+      his.closeCreateModal(); // Close modal after successful submission
     }
   },
   mounted() {
