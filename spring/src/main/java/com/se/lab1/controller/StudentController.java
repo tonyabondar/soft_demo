@@ -35,11 +35,11 @@ import com.se.lab1.model.*;
 
 public class StudentController {
 	private static ConcurrentHashMap<String, Student> studentDatabase=new ConcurrentHashMap<>();
-	/*
-	static StudentController() {
+	
+	static  {
 		Student stud1001=new Student("1001", "123456", "", "");
 		studentDatabase.put(stud1001.getStudentId(), stud1001);
-	}*/
+	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
