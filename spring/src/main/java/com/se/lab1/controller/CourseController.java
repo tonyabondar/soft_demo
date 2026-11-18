@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.se.lab1.model.Course;
 import com.se.lab1.model.CourseRepository;
 
-@CrossOrigin(origins = "http://localhost:8081") // used for vue
+@CrossOrigin(origins = "http://localhost:5173") // used for vue
 @RestController
 @RequestMapping("/api")
 public class CourseController {
